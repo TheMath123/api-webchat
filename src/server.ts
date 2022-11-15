@@ -19,19 +19,20 @@ const io = new Server(httpServer, {
     origin: '*',
   },
 });
-io.sockets.emit('hi', 'everyone');
-
-io.engine.on('connection_error', err => {
-  console.log(err.req); // the request object
-  console.log(err.code); // the error code, for example 1
-  console.log(err.message); // the error message, for example "Session ID unknown"
-  console.log(err.context); // some additional error context
-});
 
 io.on('connection', socket => {
-  console.log(`Connection ${socket.id}`);
+  console.log('[IO] Connection - New socket connect', socket.id);
+
+  socket.on('chat.message', data => {
+    console.log(`[SOCKET] chat.message - data: `, data);
+    io.emit('chat.message', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
+  });
 });
 
 httpServer.listen(port, host, () => {
-  console.log(`API is running in http://${host}:${port}`);
+  console.info(`API is running in http://${host}:${port}`);
 });
