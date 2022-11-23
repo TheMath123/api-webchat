@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cors, { CorsOptions } from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { router } from './routers/router';
@@ -8,18 +9,21 @@ const host = process.env.HOST || 'localhost';
 const port = Number(process.env.PORT) || 5555;
 const app = express();
 
+app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
   res.send();
 });
 
+const corsOptions: CorsOptions = {
+  origin: process.env.URL_APP || '*',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.URL_APP || '*',
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  },
+  cors: corsOptions,
 });
 
 io.on('connection', socket => {
