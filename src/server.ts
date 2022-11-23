@@ -3,11 +3,20 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { router } from './routers/router';
+import cors from 'cors';
+
 const host = process.env.HOST || 'localhost';
 const port = Number(process.env.PORT) || 5555;
 const app = express();
 
 app.use(router);
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
   res.send();
@@ -17,7 +26,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   },
 });
 
