@@ -17,9 +17,7 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.URL_APP || '*',
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-    allowedHeaders: '*',
+    origin: '*',
   },
 });
 
