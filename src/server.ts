@@ -18,7 +18,8 @@ app.get('/', (req, res) => {
 
 const corsOptions: CorsOptions = {
   origin: process.env.URL_APP || '*',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  allowedHeaders: '*',
+  methods: '*', // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 const httpServer = createServer(app);
