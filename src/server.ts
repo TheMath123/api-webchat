@@ -13,7 +13,7 @@ app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
-  res.send();
+  res.send('HELLO WORLD!');
 });
 
 const corsOptions: CorsOptions = {
