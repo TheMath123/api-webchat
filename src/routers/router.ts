@@ -3,6 +3,6 @@ const router = express.Router();
 
 import HomeController from '../controllers/HomeController';
 
-router.get('/api/index', HomeController.index);
+router.get('/api/egg', HomeController.index);
 
 export { router };
