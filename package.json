@@ -1,7 +1,7 @@
 {
   "name": "webchat-api",
   "version": "1.0.0",
-  "main": "server.ts",
+  "main": "./dist/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch ./node_modules src/server.ts",
     "build": "npx tsc",
