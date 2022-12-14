@@ -28,6 +28,7 @@ const io = new Server(httpServer, {
   path: '/chat-connection/',
   cors: corsOptions,
   connectTimeout: 300,
+  transports: ['websocket'],
 });
 
 io.on('connection', socket => {
