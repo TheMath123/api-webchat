@@ -25,6 +25,7 @@ const corsOptions: CorsOptions = {
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
+  allowEIO3: true,
 });
 
 io.on('connection', socket => {
