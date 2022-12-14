@@ -13,7 +13,7 @@ app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
-  res.send('HELLO WORLD!');
+  res.send();
 });
 
 const corsOptions: CorsOptions = {
@@ -24,6 +24,7 @@ const corsOptions: CorsOptions = {
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
+  path: '/chat-connection/',
   cors: corsOptions,
   connectTimeout: 300,
 });
