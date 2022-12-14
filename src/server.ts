@@ -26,7 +26,6 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
   connectTimeout: 300,
-  transports: ['websocket'],
 });
 
 io.on('connection', socket => {
@@ -39,6 +38,10 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
+  });
+
+  socket.on('connect_error', err => {
+    console.log(`connect_error due to ${err.message}`);
   });
 });
 
