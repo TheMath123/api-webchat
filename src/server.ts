@@ -26,7 +26,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: corsOptions,
   connectTimeout: 300,
-  transports: ['websocket'],
+  transports: ['websocket', 'polling'],
 });
 
 io.on('connection', socket => {
