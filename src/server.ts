@@ -29,6 +29,7 @@ const io = new Server(httpServer, {
   path: '/chat-connection/',
   cors: corsOptions,
   connectTimeout: 300,
+  allowEIO3: true,
 });
 
 io.use(wrap(sessionMiddleware));
