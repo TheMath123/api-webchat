@@ -23,7 +23,7 @@ const corsOptions: CorsOptions = {
   origin: process.env.URL_APP || '*',
   allowedHeaders: '*',
   methods: '*', // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials: true,
+  // credentials: true,
 };
 
 export { sessionMiddleware, wrap, corsOptions };
