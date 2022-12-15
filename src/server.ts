@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(sessionMiddleware);
+app.use(express.static('public'));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
