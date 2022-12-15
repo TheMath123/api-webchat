@@ -1,8 +1,13 @@
 import 'dotenv/config';
 import express from 'express';
-import cors, { CorsOptions } from 'cors';
+import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import {
+  corsOptions,
+  sessionMiddleware,
+  wrap,
+} from './controllers/ServerController';
 import { router } from './routers/router';
 
 const host = process.env.HOST || 'localhost';
@@ -16,12 +21,7 @@ app.get('/', (req, res) => {
   res.send();
 });
 
-const corsOptions: CorsOptions = {
-  origin: process.env.URL_APP || '*',
-  allowedHeaders: '*',
-  methods: '*', // some legacy browsers (IE11, various SmartTVs) choke on 204
-  // credentials: true,
-};
+app.use(sessionMiddleware);
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -30,6 +30,7 @@ const io = new Server(httpServer, {
   connectTimeout: 300,
 });
 
+io.use(wrap(sessionMiddleware));
 io.on('connection', socket => {
   console.log('[IO] Connection - New socket connect', socket.id);
 
