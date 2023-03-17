@@ -11,14 +11,14 @@ import {
 import { router } from './routers/router';
 
 const host = process.env.HOST || 'localhost';
-const port = Number(process.env.PORT) || 5555;
+const port = parseInt(process.env.PORT) || 5555;
 const app = express();
 
 app.use(cors());
 app.use(router);
 
 app.get('/', (req, res) => {
-  res.send();
+  res.send('Procure o Easter Egg');
 });
 
 // app.use(sessionMiddleware);
@@ -28,18 +28,13 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   path: '/chat-connection/',
   cors: corsOptions,
-  connectTimeout: 300,
+  transports: ['websocket'],
   allowEIO3: true,
 });
 
 io.use(wrap(sessionMiddleware));
 io.on('connection', socket => {
   console.log('[IO] Connection - New socket connect', socket.id);
-
-  socket.on('chat.message', data => {
-    console.log(`[SOCKET] chat.message - data: `, data);
-    io.emit('chat.message', data);
-  });
 
   socket.on('disconnect', () => {
     console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);

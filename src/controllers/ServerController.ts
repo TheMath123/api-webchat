@@ -1,4 +1,3 @@
-import { CorsOptions } from 'cors';
 import 'dotenv/config';
 import session from 'express-session';
 
@@ -19,11 +18,9 @@ const sessionMiddleware = session({
 const wrap = expressMiddleware => (socket, next) =>
   expressMiddleware(socket.request, {}, next);
 
-const corsOptions: CorsOptions = {
+const corsOptions = {
   origin: process.env.URL_APP || '*',
-  allowedHeaders: '*',
-  methods: '*', // some legacy browsers (IE11, various SmartTVs) choke on 204
-  // credentials: true,
+  methods: ['GET', 'POST'], // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 export { sessionMiddleware, wrap, corsOptions };
