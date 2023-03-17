@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import session from 'express-session';
 
+const { URL_APP } = process.env;
+
 const sessionMiddleware = session({
   secret: process.env.COOKIE_SECRET,
   name: 'sid',
@@ -19,7 +21,7 @@ const wrap = expressMiddleware => (socket, next) =>
   expressMiddleware(socket.request, {}, next);
 
 const corsOptions = {
-  origin: process.env.URL_APP || '*',
+  origin: `${URL_APP}`,
   methods: ['GET', 'POST'], // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
