@@ -28,8 +28,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   path: '/chat-connection/',
   cors: corsOptions,
-  transports: ['websocket'],
-  allowEIO3: true,
+  transports: ['websocket']
 });
 
 io.use(wrap(sessionMiddleware));
