@@ -6,7 +6,7 @@ import { Server } from 'socket.io';
 import { corsOptions, sessionMiddleware, wrap } from './config/serverOptions';
 import { router } from './routers/router';
 
-const host = process.env.HOST || 'localhost';
+const host = process.env.HOST || '0.0.0.0';
 const port = parseInt(process.env.PORT) || 5555;
 const app = express();
 
