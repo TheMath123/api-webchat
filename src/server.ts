@@ -33,15 +33,18 @@ io.use(wrap(sessionMiddleware));
 io.on('connection', socket => {
   console.log('[IO] Connection - New socket connect', socket.id);
 
+  // Send and recieve messages
   socket.on('chat.message', data => {
     console.log(`[SOCKET] chat.message - data: `, data);
     io.emit('chat.message', data);
   });
 
+  // Disconnect information
   socket.on('disconnect', () => {
     console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
   });
 
+  // Error information
   socket.on('connect_error', err => {
     console.log(`connect_error due to ${err.message}`);
   });
