@@ -39,6 +39,15 @@ io.on('connection', socket => {
     io.emit('chat.message', data);
   });
 
+  socket.on('chat.connect', data => {
+    console.log(`[SOCKET] chat.connect - data: `, data);
+    io.emit('chat.connect', data);
+  });
+  socket.on('chat.disconnect', data => {
+    console.log(`[SOCKET] chat.disconnect - data: `, data);
+    io.emit('chat.disconnect', data);
+  });
+
   // Disconnect information
   socket.on('disconnect', () => {
     console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
