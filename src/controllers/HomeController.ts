@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 export default class HomeController {
   static index(request: Request, response: Response) {
-    response.send(
-      `<img src="https://firebasestorage.googleapis.com/v0/b/matheuspa-projects.appspot.com/o/easter-egg%2Feaster-egg-dinochat.png?alt=media&token=4fb5327a-7fe0-41b9-8799-9382557bfaf2" alt="Easter Egg">`,
-    );
+    const urlImage =
+      'https://i0.wp.com/winkgo.com/wp-content/uploads/2022/03/easter-memes-73.jpg?resize=720%2C720&ssl=1';
+    response.send(`<img src=${urlImage} alt="Easter Egg">`);
   }
 }

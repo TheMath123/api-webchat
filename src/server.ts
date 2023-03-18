@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { corsOptions, wrap } from './controllers/ServerController';
+import { corsOptions, sessionMiddleware, wrap } from './config/serverOptions';
 import { router } from './routers/router';
 
 const host = process.env.HOST || 'localhost';
@@ -17,14 +17,18 @@ app.get('/', (req, res) => {
   res.send('Procure o Easter Egg');
 });
 
+app.use(sessionMiddleware);
 app.use(express.static('public'));
 
 const httpServer = createServer(app);
+
 const io = new Server(httpServer, {
   path: '/chat-connection/',
   cors: corsOptions,
   transports: ['websocket'],
 });
+
+io.use(wrap(sessionMiddleware));
 
 io.on('connection', socket => {
   console.log('[IO] Connection - New socket connect', socket.id);
