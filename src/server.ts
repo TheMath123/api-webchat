@@ -31,7 +31,7 @@ const io = new Server(httpServer, {
 io.use(wrap(sessionMiddleware));
 
 io.on('connection', socket => {
-  console.log('[IO] Connection - New socket connect', socket.id);
+  console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
 
   // Send and recieve messages
   socket.on('chat.message', data => {
@@ -40,17 +40,18 @@ io.on('connection', socket => {
   });
 
   socket.on('chat.connect', data => {
-    console.log(`[SOCKET] chat.connect - data: `, data);
+    console.log(`[SOCKET] chat.connect - data: `, data.message);
     io.emit('chat.connect', data);
   });
+
   socket.on('chat.disconnect', data => {
-    console.log(`[SOCKET] chat.disconnect - data: `, data);
+    console.log(`[SOCKET] chat.disconnect - data: `, data.message);
     io.emit('chat.disconnect', data);
   });
 
   // Disconnect information
-  socket.on('disconnect', () => {
-    console.log(`[IO] Disconnect -  Socket disconnect ${socket.id}`);
+  socket.on('disconnect', data => {
+    console.log(`[IO] Disconnect -  Socket disconnect ${data}`);
   });
 
   // Error information
