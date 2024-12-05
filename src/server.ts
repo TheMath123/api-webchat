@@ -5,13 +5,18 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { corsOptions, sessionMiddleware, wrap } from './config/serverOptions';
 import { router } from './routers/router';
+import { connectDB } from './services/mongo';
 
 const host = process.env.HOST || '0.0.0.0';
 const port = parseInt(process.env.PORT) || 5555;
 const app = express();
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(router);
+
+connectDB();
 
 app.get('/', (req, res) => {
   res.send('Procure o Easter Egg');
